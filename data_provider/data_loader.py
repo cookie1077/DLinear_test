@@ -204,8 +204,8 @@ class Dataset_Custom(Dataset):
             self.label_len = size[1]
             self.pred_len = size[2]
         # init
-        assert flag in ['train', 'test', 'val']
-        type_map = {'train': 0, 'val': 1, 'test': 2}
+        assert flag in ['train', 'test', 'val', 'test_whole']
+        type_map = {'train': 0, 'val': 1, 'test': 2, 'test_whole':2}
         self.set_type = type_map[flag]
 
         self.features = features
@@ -247,10 +247,14 @@ class Dataset_Custom(Dataset):
             df_data = df_raw[[self.target]]
 
         if self.scale:
-            train_data = df_data[border1s[0]:border2s[0]]
-            self.scaler.fit(train_data.values)
-            # print(self.scaler.mean_)
-            # exit()
+            if self.flag == 'test_whole':
+                self.scaler.scale_ = np.array([29.68678101])
+                self.scaler.mean_ = np.array([105.56850176])
+                self.scaler.var_ = np.array([881.30496647])
+            else:
+                train_data = df_data[border1s[0]:border2s[0]]
+                self.scaler.fit(train_data.values)
+        
             data = self.scaler.transform(df_data.values)
         else:
             data = df_data.values
@@ -278,7 +282,7 @@ class Dataset_Custom(Dataset):
     def __getitem__(self, index):
 
         if self.flag == 'test_whole':
-            s_begin = index
+            s_begin = 0
             s_end = s_begin + self.seq_len
 
             seq_x = self.data_x[s_begin:s_end]
@@ -363,6 +367,8 @@ class Dataset_Pred(Dataset):
 
         if self.scale:
             self.scaler.fit(df_data.values)
+            print('the variables are')
+            print(self.scaler.scale_, self.scaler.mean_, self.scaler.var_)
             data = self.scaler.transform(df_data.values)
         else:
             data = df_data.values

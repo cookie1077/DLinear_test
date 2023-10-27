@@ -3,11 +3,14 @@ from exp.exp_basic import Exp_Basic
 from models import Informer, Autoformer, Transformer, DLinear
 from utils.tools import EarlyStopping, adjust_learning_rate, visual, test_params_flop
 from utils.metrics import metric
+from sklearn.preprocessing import StandardScaler
 
 import numpy as np
 import torch
 import torch.nn as nn
 from torch import optim
+import pandas as pd
+import openpyxl
 
 import os
 import time
@@ -94,6 +97,7 @@ class Exp_Main(Exp_Basic):
         return total_loss
 
     def train(self, setting):
+        
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
@@ -178,23 +182,23 @@ class Exp_Main(Exp_Basic):
                     scaler.update()
                 else:
                     loss.backward()
-                    model_optim.step()
+                    model_optim.step() 
 
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
             train_loss = np.average(train_loss)
             vali_loss = self.vali(vali_data, vali_loader, criterion)
-            test_loss = self.vali(test_data, test_loader, criterion)
+            test_loss = self.vali(test_data, test_loader, criterion)  
 
             print("Epoch: {0}, Steps: {1} | Train Loss: {2:.7f} Vali Loss: {3:.7f} Test Loss: {4:.7f}".format(
-                epoch + 1, train_steps, train_loss, vali_loss, test_loss))
-            early_stopping(vali_loss, self.model, path)
+                epoch + 1, train_steps, train_loss, vali_loss, test_loss)) 
+            early_stopping(vali_loss, self.model, path) 
             if early_stopping.early_stop:
                 print("Early stopping")
                 break
 
-            adjust_learning_rate(model_optim, epoch + 1, self.args)
+            adjust_learning_rate(model_optim, epoch + 1, self.args) 
 
-        best_model_path = path + '/' + 'checkpoint.pth'
+        best_model_path = path + '/' + 'checkpoint.pth' 
         self.model.load_state_dict(torch.load(best_model_path))
 
         return self.model
@@ -214,7 +218,7 @@ class Exp_Main(Exp_Basic):
         folder_path = './test_results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-
+      
         self.model.eval()
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
@@ -253,7 +257,23 @@ class Exp_Main(Exp_Basic):
                 outputs = outputs.detach().cpu().numpy()
                 
                 if test:
-                    print(outputs)
+                    print('this is for testing')
+                  
+                    pred = [o[0] for o in outputs[0]]
+                    input = batch_x.detach().cpu().numpy()
+                    scaler = StandardScaler()
+                    scaler.scale_ = np.array([29.68678101])
+                    scaler.mean_ = np.array([105.56850176])
+                    scaler.var_ = np.array([881.30496647])
+
+                    pred = scaler.inverse_transform(pred)
+                    input = scaler.inverse_transform(input)
+                    self.__save_as_excel(setting, pred)
+                    
+                    gt = np.concatenate((input[0, :, -1], pred[:]), axis=0)
+                    pd = np.concatenate((input[0, :, -1], pred[:]), axis=0)
+                    visual(gt, pd, os.path.join(folder_path, str(i) + '_testdata.pdf'))
+
                     return
 
                 batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
@@ -355,3 +375,15 @@ class Exp_Main(Exp_Basic):
         np.save(folder_path + 'real_prediction.npy', preds)
 
         return
+    
+    def __save_as_excel(self, setting, pred): 
+        # list of name, degree, score
+        date = range(1, 31)
+        # dictionary of lists
+        dict = {'date': date, 'flux': pred}
+            
+        df = pd.DataFrame(dict)
+
+        # saving the dataframe
+        folder_path = './result_excel/' + setting 
+        df.to_excel(folder_path + 'results.xlsx', index = False)

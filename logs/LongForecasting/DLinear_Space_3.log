@@ -1,0 +1,74 @@
+Args in experiment:
+Namespace(activation='gelu', batch_size=8, c_out=7, checkpoints='./checkpoints/', d_ff=2048, d_layers=1, d_model=512, data='custom', data_path='ai_competition_nonan.csv', dec_in=7, des='Exp', devices='0,1,2,3', distil=True, do_predict=False, dropout=0.05, e_layers=2, embed='timeF', embed_type=0, enc_in=1, factor=1, features='S', freq='h', gpu=0, individual=False, is_training=1, itr=1, label_len=30, learning_rate=0.001, loss='mse', lradj='type1', model='DLinear', model_id='Space_3', moving_avg=25, n_heads=8, num_workers=10, output_attention=False, patience=3, pred_len=30, root_path='./dataset/', seq_len=60, target='OT', test_flop=False, train_epochs=10, use_amp=False, use_gpu=False, use_multi_gpu=False)
+Use CPU
+>>>>>>>start training : Space_3_DLinear_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 2944
+val 406
+test 837
+	iters: 100, epoch: 1 | loss: 0.2308362
+	speed: 0.0071s/iter; left time: 25.4322s
+	iters: 200, epoch: 1 | loss: 0.6045390
+	speed: 0.0012s/iter; left time: 4.1397s
+	iters: 300, epoch: 1 | loss: 0.2400705
+	speed: 0.0011s/iter; left time: 3.8810s
+Epoch: 1 cost time: 1.03629732131958
+Epoch: 1, Steps: 368 | Train Loss: 0.3239641 Vali Loss: 0.0929165 Test Loss: 0.8617916
+Validation loss decreased (inf --> 0.092916).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 2 | loss: 0.0690368
+	speed: 0.0070s/iter; left time: 22.3945s
+	iters: 200, epoch: 2 | loss: 0.1575335
+	speed: 0.0014s/iter; left time: 4.4149s
+	iters: 300, epoch: 2 | loss: 0.4100910
+	speed: 0.0014s/iter; left time: 4.3058s
+Epoch: 2 cost time: 0.6202538013458252
+Epoch: 2, Steps: 368 | Train Loss: 0.3053028 Vali Loss: 0.0640019 Test Loss: 0.8930883
+Validation loss decreased (0.092916 --> 0.064002).  Saving model ...
+Updating learning rate to 0.0005
+	iters: 100, epoch: 3 | loss: 0.2987112
+	speed: 0.0103s/iter; left time: 29.4210s
+	iters: 200, epoch: 3 | loss: 0.2027943
+	speed: 0.0014s/iter; left time: 3.9281s
+	iters: 300, epoch: 3 | loss: 0.3376285
+	speed: 0.0016s/iter; left time: 4.1081s
+Epoch: 3 cost time: 0.7744829654693604
+Epoch: 3, Steps: 368 | Train Loss: 0.2984530 Vali Loss: 0.0620803 Test Loss: 0.8992164
+Validation loss decreased (0.064002 --> 0.062080).  Saving model ...
+Updating learning rate to 0.00025
+	iters: 100, epoch: 4 | loss: 0.3086768
+	speed: 0.0105s/iter; left time: 26.1186s
+	iters: 200, epoch: 4 | loss: 0.2239353
+	speed: 0.0018s/iter; left time: 4.3410s
+	iters: 300, epoch: 4 | loss: 0.2854541
+	speed: 0.0014s/iter; left time: 3.2760s
+Epoch: 4 cost time: 0.9365692138671875
+Epoch: 4, Steps: 368 | Train Loss: 0.2959167 Vali Loss: 0.0759545 Test Loss: 0.8677095
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000125
+	iters: 100, epoch: 5 | loss: 0.2177357
+	speed: 0.0066s/iter; left time: 13.9531s
+	iters: 200, epoch: 5 | loss: 0.2879069
+	speed: 0.0034s/iter; left time: 6.8454s
+	iters: 300, epoch: 5 | loss: 0.4269252
+	speed: 0.0043s/iter; left time: 8.2585s
+Epoch: 5 cost time: 1.1241483688354492
+Epoch: 5, Steps: 368 | Train Loss: 0.2944052 Vali Loss: 0.0640728 Test Loss: 0.8830452
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 6.25e-05
+	iters: 100, epoch: 6 | loss: 0.2194949
+	speed: 0.0060s/iter; left time: 10.3808s
+	iters: 200, epoch: 6 | loss: 0.2762684
+	speed: 0.0011s/iter; left time: 1.8826s
+	iters: 300, epoch: 6 | loss: 0.2296876
+	speed: 0.0011s/iter; left time: 1.7645s
+Epoch: 6 cost time: 0.5100922584533691
+Epoch: 6, Steps: 368 | Train Loss: 0.2936884 Vali Loss: 0.0648101 Test Loss: 0.8819611
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : Space_3_DLinear_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 837
+mse:0.8992164731025696, mae:0.5940926671028137, rse:0.8485864996910095, corr:[0.13068777 0.13408598 0.13605955 0.13449794 0.12980126 0.12857819
+ 0.12871249 0.12878713 0.12652853 0.1256149  0.12562303 0.12540899
+ 0.12441012 0.12356058 0.12256306 0.12194917 0.12091784 0.11999142
+ 0.11970592 0.11947138 0.1192122  0.11734419 0.11592201 0.11148231
+ 0.10954312 0.1073974  0.10568275 0.10422191 0.10250232 0.10181209]

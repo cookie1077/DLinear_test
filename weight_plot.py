@@ -3,7 +3,7 @@ import numpy as np
 import os 
 import matplotlib.pyplot as plt
 
-model_name = ''
+model_name = 'Space_1_DLinear_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0'
 for root, dirs, files in os.walk("checkpoints"):
     for name in files:
         model_path = os.path.join(root, name)
