@@ -200,11 +200,13 @@ class Exp_Main(Exp_Basic):
         return self.model
 
     def test(self, setting, test=0):
-        test_data, test_loader = self._get_data(flag='test')
         
         if test:
             print('loading model')
             self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
+            test_data, test_loader = self._get_data(flag='test_whole')
+        else:
+            test_data, test_loader = self._get_data(flag='test')
 
         preds = []
         trues = []
@@ -248,8 +250,13 @@ class Exp_Main(Exp_Basic):
                 f_dim = -1 if self.args.features == 'MS' else 0
                 # print(outputs.shape,batch_y.shape)
                 outputs = outputs[:, -self.args.pred_len:, f_dim:]
-                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
                 outputs = outputs.detach().cpu().numpy()
+                
+                if test:
+                    print(outputs)
+                    return
+
+                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
                 batch_y = batch_y.detach().cpu().numpy()
 
                 pred = outputs  # outputs.detach().cpu().numpy()  # .squeeze()

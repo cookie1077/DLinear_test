@@ -19,13 +19,18 @@ def data_provider(args, flag):
         drop_last = True
         batch_size = args.batch_size
         freq = args.freq
+    elif flag == 'test_whole':
+        shuffle_flag = False
+        drop_last = True
+        batch_size = args.batch_size
+        freq = args.freq
     elif flag == 'pred':
         shuffle_flag = False
         drop_last = False
         batch_size = 1
         freq = args.freq
         Data = Dataset_Pred
-    else:
+    else: # val, train
         shuffle_flag = True
         drop_last = True
         batch_size = args.batch_size
