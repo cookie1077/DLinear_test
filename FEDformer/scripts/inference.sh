@@ -31,6 +31,6 @@ python -u run.py \
   --c_out 1 \
   --des 'Exp' \
   --d_model 512 \
-  --batch_size 8 \
+  --batch_size 60 \
   --checkpoints $checkpoints \
   --itr 1  >$checkpoints/FEDformer_$task_id.log
