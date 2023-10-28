@@ -204,8 +204,8 @@ class Dataset_Custom(Dataset):
             self.label_len = size[1]
             self.pred_len = size[2]
         # init
-        assert flag in ['train', 'test', 'val']
-        type_map = {'train': 0, 'val': 1, 'test': 2}
+        assert flag in ['train', 'test', 'val', 'test_whole']
+        type_map = {'train': 0, 'val': 1, 'test': 2, 'test_whole':2}
         self.set_type = type_map[flag]
 
         self.features = features
@@ -246,8 +246,14 @@ class Dataset_Custom(Dataset):
             df_data = df_raw[[self.target]]
 
         if self.scale:
-            train_data = df_data[border1s[0]:border2s[0]]
-            self.scaler.fit(train_data.values)
+            if self.flag == 'test_whole':
+                self.scaler.scale_ = np.array([29.68678101])
+                self.scaler.mean_ = np.array([105.56850176])
+                self.scaler.var_ = np.array([881.30496647])
+            else:
+                train_data = df_data[border1s[0]:border2s[0]]
+                self.scaler.fit(train_data.values)
+        
             data = self.scaler.transform(df_data.values)
         else:
             data = df_data.values
@@ -269,20 +275,34 @@ class Dataset_Custom(Dataset):
         self.data_stamp = data_stamp
 
     def __getitem__(self, index):
-        s_begin = index
-        s_end = s_begin + self.seq_len
-        r_begin = s_end - self.label_len
-        r_end = r_begin + self.label_len + self.pred_len
 
-        seq_x = self.data_x[s_begin:s_end]
-        seq_y = self.data_y[r_begin:r_end]
-        seq_x_mark = self.data_stamp[s_begin:s_end]
-        seq_y_mark = self.data_stamp[r_begin:r_end]
+        if self.flag == 'test_whole':
+            s_begin = 0
+            s_end = s_begin + self.seq_len
+
+            seq_x = self.data_x[s_begin:s_end]
+            seq_y = self.data_y[s_begin:s_end]
+            seq_x_mark = self.data_stamp[s_begin:s_end]
+            seq_y_mark = self.data_stamp[s_begin:s_end]
+        else:
+            s_begin = index
+            s_end = s_begin + self.seq_len
+            r_begin = s_end - self.label_len
+            r_end = r_begin + self.label_len + self.pred_len
+
+            seq_x = self.data_x[s_begin:s_end]
+            seq_y = self.data_y[r_begin:r_end]
+            seq_x_mark = self.data_stamp[s_begin:s_end]
+            seq_y_mark = self.data_stamp[r_begin:r_end]
+        
 
         return seq_x, seq_y, seq_x_mark, seq_y_mark
 
     def __len__(self):
-        return len(self.data_x) - self.seq_len - self.pred_len + 1
+        if self.flag == 'test_whole':
+            return len(self.data_x)
+        else:
+            return len(self.data_x) - self.seq_len - self.pred_len + 1
 
     def inverse_transform(self, data):
         return self.scaler.inverse_transform(data)
