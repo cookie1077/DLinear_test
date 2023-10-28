@@ -15,6 +15,7 @@ checkpoints=/output/
 
 python -u run.py \
   --is_training 0 \
+  --root_path /input \
   --data_path ai_competition_test.csv  \
   --task_id $task_id\
   --model FEDformer \

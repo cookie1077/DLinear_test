@@ -234,6 +234,7 @@ class Exp_Main(Exp_Basic):
             os.makedirs(folder_path)
         self.model.eval()
         with torch.no_grad():
+            print('start here')
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
                 print('loop begins')
                 batch_x = batch_x.float().to(self.device)
