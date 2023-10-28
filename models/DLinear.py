@@ -82,5 +82,5 @@ class Model(nn.Module):
             seasonal_output = self.Linear_Seasonal(seasonal_init)
             trend_output = self.Linear_Trend(trend_init)
 
-        x = seasonal_output + trend_output
+        x = seasonal_output + trend_output*5
         return x.permute(0,2,1) # to [Batch, Output length, Channel]

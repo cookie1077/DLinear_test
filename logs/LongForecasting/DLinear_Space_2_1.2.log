@@ -1,0 +1,64 @@
+Args in experiment:
+Namespace(activation='gelu', batch_size=8, c_out=7, checkpoints='./checkpoints/', d_ff=2048, d_layers=1, d_model=512, data='custom', data_path='ai_competition_nonan.csv', dec_in=7, des='Exp', devices='0,1,2,3', distil=True, do_predict=False, dropout=0.05, e_layers=2, embed='timeF', embed_type=0, enc_in=1, factor=1, features='S', freq='h', gpu=0, individual=False, is_training=1, itr=1, label_len=30, learning_rate=0.002, loss='mse', lradj='type1', model='DLinear', model_id='Space_2_1.2', moving_avg=25, n_heads=8, num_workers=10, output_attention=False, patience=3, pred_len=30, root_path='./dataset/', seq_len=60, target='OT', test_flop=False, train_epochs=10, use_amp=False, use_gpu=False, use_multi_gpu=False)
+Use CPU
+>>>>>>>start training : Space_2_1.2_DLinear_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 2944
+val 406
+test 837
+	iters: 100, epoch: 1 | loss: 0.3938717
+	speed: 0.0059s/iter; left time: 21.2782s
+	iters: 200, epoch: 1 | loss: 0.9443278
+	speed: 0.0013s/iter; left time: 4.3960s
+	iters: 300, epoch: 1 | loss: 0.2904610
+	speed: 0.0013s/iter; left time: 4.2926s
+Epoch: 1 cost time: 0.9452121257781982
+Epoch: 1, Steps: 368 | Train Loss: 0.4981870 Vali Loss: 0.0874566 Test Loss: 1.0808866
+Validation loss decreased (inf --> 0.087457).  Saving model ...
+Updating learning rate to 0.002
+	iters: 100, epoch: 2 | loss: 0.1186620
+	speed: 0.0057s/iter; left time: 18.4237s
+	iters: 200, epoch: 2 | loss: 0.2440795
+	speed: 0.0012s/iter; left time: 3.8640s
+	iters: 300, epoch: 2 | loss: 0.4843801
+	speed: 0.0014s/iter; left time: 4.1088s
+Epoch: 2 cost time: 0.5540938377380371
+Epoch: 2, Steps: 368 | Train Loss: 0.4178488 Vali Loss: 0.0685619 Test Loss: 1.1106727
+Validation loss decreased (0.087457 --> 0.068562).  Saving model ...
+Updating learning rate to 0.001
+	iters: 100, epoch: 3 | loss: 0.3274101
+	speed: 0.0062s/iter; left time: 17.6455s
+	iters: 200, epoch: 3 | loss: 0.2106559
+	speed: 0.0012s/iter; left time: 3.3786s
+	iters: 300, epoch: 3 | loss: 0.4250797
+	speed: 0.0013s/iter; left time: 3.3469s
+Epoch: 3 cost time: 0.54197096824646
+Epoch: 3, Steps: 368 | Train Loss: 0.3506316 Vali Loss: 0.0722570 Test Loss: 1.0074161
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.0005
+	iters: 100, epoch: 4 | loss: 0.3507533
+	speed: 0.0060s/iter; left time: 14.9298s
+	iters: 200, epoch: 4 | loss: 0.2693909
+	speed: 0.0013s/iter; left time: 3.0119s
+	iters: 300, epoch: 4 | loss: 0.3165930
+	speed: 0.0013s/iter; left time: 2.9451s
+Epoch: 4 cost time: 0.5628259181976318
+Epoch: 4, Steps: 368 | Train Loss: 0.3237045 Vali Loss: 0.0732853 Test Loss: 0.8810084
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 0.00025
+	iters: 100, epoch: 5 | loss: 0.2066348
+	speed: 0.0058s/iter; left time: 12.1564s
+	iters: 200, epoch: 5 | loss: 0.3040377
+	speed: 0.0012s/iter; left time: 2.4221s
+	iters: 300, epoch: 5 | loss: 0.4496163
+	speed: 0.0012s/iter; left time: 2.3584s
+Epoch: 5 cost time: 0.531074047088623
+Epoch: 5, Steps: 368 | Train Loss: 0.3067389 Vali Loss: 0.0702522 Test Loss: 0.9164399
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : Space_2_1.2_DLinear_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 837
+mse:1.1106728315353394, mae:0.6572141051292419, rse:0.9430984854698181, corr:[0.12250081 0.12165549 0.12964068 0.11672045 0.10642651 0.12109748
+ 0.11718549 0.11806252 0.10808921 0.10081047 0.09995365 0.09283517
+ 0.09299253 0.08742896 0.09939174 0.09876027 0.09751207 0.10354445
+ 0.1021805  0.10082757 0.1043783  0.09724193 0.09685909 0.09143145
+ 0.08445878 0.08501285 0.08498474 0.08056559 0.08404153 0.07828782]
