@@ -260,7 +260,11 @@ class Dataset_Custom(Dataset):
         else:
             data = df_data.values
 
-        df_stamp = df_raw[['date']][border1:border2]
+        if self.flag == 'test_whole':
+            df_stamp = df_raw[['date']][0:len(df_raw)]
+        else:
+            df_stamp = df_raw[['date']][border1:border2]
+
         df_stamp['date'] = pd.to_datetime(df_stamp.date)
         if self.timeenc == 0:
             df_stamp['month'] = df_stamp.date.apply(lambda row: row.month, 1)
@@ -278,7 +282,7 @@ class Dataset_Custom(Dataset):
         else:
             self.data_x = data[border1:border2]
             self.data_y = data[border1:border2]
-            
+
         self.data_stamp = data_stamp
 
     def __getitem__(self, index):
