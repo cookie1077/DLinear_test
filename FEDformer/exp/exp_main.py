@@ -384,5 +384,5 @@ class Exp_Main(Exp_Basic):
         df = pd.DataFrame(dict)
 
         # saving the dataframe
-        folder_path = './result_excel/' + setting 
+        folder_path = '/output/'
         df.to_excel(folder_path + 'results.xlsx', index = False)
