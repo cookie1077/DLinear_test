@@ -213,6 +213,7 @@ class Dataset_Custom(Dataset):
         self.scale = scale
         self.timeenc = timeenc
         self.freq = freq
+        self.flag = flag
 
         self.root_path = root_path
         self.data_path = data_path
