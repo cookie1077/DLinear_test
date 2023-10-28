@@ -33,4 +33,4 @@ python -u run.py \
   --d_model 512 \
   --batch_size 60 \
   --checkpoints $checkpoints \
-  --itr 1  >$checkpoints/FEDformer_$task_id.log
+  --itr 1 # >$checkpoints/FEDformer_$task_id.log
