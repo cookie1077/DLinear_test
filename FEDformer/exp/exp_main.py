@@ -222,7 +222,7 @@ class Exp_Main(Exp_Basic):
 
         if test:
             print('loading model')
-            self.model.load_state_dict(torch.load(os.path.join('/inputs/' + 'checkpoint.pth')))
+            self.model.load_state_dict(torch.load(os.path.join('/input/' + 'checkpoint.pth')))
             test_data, test_loader = self._get_data(flag='test_whole')
         else:
             test_data, test_loader = self._get_data(flag='test')
