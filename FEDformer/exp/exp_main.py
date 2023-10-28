@@ -98,7 +98,7 @@ class Exp_Main(Exp_Basic):
         vali_data, vali_loader = self._get_data(flag='val')
         test_data, test_loader = self._get_data(flag='test')
 
-        path = os.path.join(self.args.checkpoints, setting)
+        path = os.path.join(self.args.checkpoints+'checkpoints/', setting)
         if not os.path.exists(path):
             os.makedirs(path)
 
@@ -219,17 +219,17 @@ class Exp_Main(Exp_Basic):
         return self.model
 
     def test(self, setting, test=0):
-        
+
         if test:
             print('loading model')
-            self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
+            self.model.load_state_dict(torch.load(os.path.join(self.args.checkpoints+ 'checkpoints/' + setting, 'checkpoint.pth')))
             test_data, test_loader = self._get_data(flag='test_whole')
         else:
             test_data, test_loader = self._get_data(flag='test')
 
         preds = []
         trues = []
-        folder_path = './test_results/' + setting + '/'
+        folder_path = self.args.checkpoints+'test_results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         self.model.eval()
@@ -304,7 +304,7 @@ class Exp_Main(Exp_Basic):
         print('test shape:', preds.shape, trues.shape)
 
         # result save
-        folder_path = './results/' + setting + '/'
+        folder_path = self.args.checkpoints+'results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
@@ -327,7 +327,7 @@ class Exp_Main(Exp_Basic):
         pred_data, pred_loader = self._get_data(flag='pred')
 
         if load:
-            path = os.path.join(self.args.checkpoints, setting)
+            path = os.path.join(self.args.checkpoints + 'checkpoints/', setting)
             best_model_path = path + '/' + 'checkpoint.pth'
             self.model.load_state_dict(torch.load(best_model_path))
 
@@ -364,7 +364,7 @@ class Exp_Main(Exp_Basic):
         preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
 
         # result save
-        folder_path = './results/' + setting + '/'
+        folder_path = self.args.checkpoints + 'results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 

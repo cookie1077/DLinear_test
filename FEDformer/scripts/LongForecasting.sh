@@ -9,6 +9,7 @@ fi
 
 preLen=30
 task_id=Test1
+checkpoints=/output/
 
 # ETTm1
 python -u run.py \
@@ -30,6 +31,7 @@ python -u run.py \
   --des 'Exp' \
   --d_model 512 \
   --batch_size 8 \
+  --checkpoints $checkpoints \
   --itr 1  >../logs/LongForecasting/FEDformer_$pred_len.log
 
 
