@@ -9,6 +9,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch import optim
+import pandas as pd
 import openpyxl
 
 import os
@@ -373,3 +374,15 @@ class Exp_Main(Exp_Basic):
         np.save(folder_path + 'real_prediction.npy', preds)
 
         return
+    
+    def __save_as_excel(self, setting, pred): 
+        # list of name, degree, score
+        date = range(1, 31)
+        # dictionary of lists
+        dict = {'date': date, 'flux': pred}
+            
+        df = pd.DataFrame(dict)
+
+        # saving the dataframe
+        folder_path = './result_excel/' + setting 
+        df.to_excel(folder_path + 'results.xlsx', index = False)
