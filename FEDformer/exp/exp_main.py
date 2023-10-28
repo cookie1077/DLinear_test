@@ -3,11 +3,13 @@ from exp.exp_basic import Exp_Basic
 from models import FEDformer, Autoformer, Informer, Transformer
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
+from sklearn.preprocessing import StandardScaler
 
 import numpy as np
 import torch
 import torch.nn as nn
 from torch import optim
+import openpyxl
 
 import os
 import time
@@ -217,10 +219,13 @@ class Exp_Main(Exp_Basic):
         return self.model
 
     def test(self, setting, test=0):
-        test_data, test_loader = self._get_data(flag='test')
+        
         if test:
             print('loading model')
             self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
+            test_data, test_loader = self._get_data(flag='test_whole')
+        else:
+            test_data, test_loader = self._get_data(flag='test')
 
         preds = []
         trues = []
@@ -255,8 +260,29 @@ class Exp_Main(Exp_Basic):
 
                 f_dim = -1 if self.args.features == 'MS' else 0
 
-                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
                 outputs = outputs.detach().cpu().numpy()
+
+                if test:
+                    print('this is for testing')
+                  
+                    pred = [o[0] for o in outputs[0]]
+                    input = batch_x.detach().cpu().numpy()
+                    scaler = StandardScaler()
+                    scaler.scale_ = np.array([29.68678101])
+                    scaler.mean_ = np.array([105.56850176])
+                    scaler.var_ = np.array([881.30496647])
+
+                    pred = scaler.inverse_transform(pred)
+                    input = scaler.inverse_transform(input)
+                    self.__save_as_excel(setting, pred)
+                    
+                    gt = np.concatenate((input[0, :, -1], pred[:]), axis=0)
+                    pd = np.concatenate((input[0, :, -1], pred[:]), axis=0)
+                    visual(gt, pd, os.path.join(folder_path, str(i) + '_testdata.pdf'))
+
+                    return
+
+                batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
                 batch_y = batch_y.detach().cpu().numpy()
 
                 pred = outputs  # outputs.detach().cpu().numpy()  # .squeeze()
