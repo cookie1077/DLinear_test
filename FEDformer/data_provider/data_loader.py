@@ -301,8 +301,11 @@ class Dataset_Custom(Dataset):
 
     def __len__(self):
         if self.flag == 'test_whole':
+            print(1)
+            print(self.data_x)
             return len(self.data_x)
         else:
+            print(2)
             return len(self.data_x) - self.seq_len - self.pred_len + 1
 
     def inverse_transform(self, data):
