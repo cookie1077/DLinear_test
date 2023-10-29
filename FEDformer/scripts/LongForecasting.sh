@@ -8,7 +8,7 @@ if [ ! -d "../logs/LongForecasting" ]; then
 fi
 
 preLen=30
-task_id=Test1
+task_id=Test2
 checkpoints=/output/
 learning_rate=0.0002
 patience=5
@@ -28,14 +28,14 @@ python -u run.py \
   --seq_len 60 \
   --label_len 30 \
   --pred_len $preLen \
-  --e_layers 5 \
+  --e_layers 2 \
   --d_layers 1 \
   --factor 3 \
   --enc_in 1 \
   --dec_in 1 \
   --c_out 1 \
   --des 'Exp' \
-  --d_model 512 \
+  --d_model 128 \
   --batch_size 8 \
   --checkpoints $checkpoints \
   --itr 1  >$checkpoints/FEDformer_$task_id.log
