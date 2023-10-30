@@ -257,14 +257,14 @@ class Exp_Main(Exp_Basic):
                 outputs = outputs.detach().cpu().numpy()
                 
                 if test:
-                    print('this is for testing')
+                    print('this is for testing haha')
                   
                     pred = [o[0] for o in outputs[0]]
                     input = batch_x.detach().cpu().numpy()
                     scaler = StandardScaler()
-                    scaler.scale_ = np.array([29.68678101])
-                    scaler.mean_ = np.array([105.56850176])
-                    scaler.var_ = np.array([881.30496647])
+                    scaler.scale_ = np.array([10.2057])
+                    scaler.mean_ = np.array([136.634])
+                    scaler.var_ = np.array([102.42])
 
                     pred = scaler.inverse_transform(pred)
                     input = scaler.inverse_transform(input)
