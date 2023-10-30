@@ -1,0 +1,7 @@
+Args in experiment:
+Namespace(activation='gelu', batch_size=60, c_out=7, checkpoints='./checkpoints/', d_ff=2048, d_layers=1, d_model=256, data='custom', data_path='ai_competition_final.csv', dec_in=3, des='Exp', devices='0,1,2,3', distil=True, do_predict=False, dropout=0.05, e_layers=2, embed='timeF', embed_type=0, enc_in=1, factor=1, features='S', freq='h', gpu=0, individual=False, is_training=0, itr=1, label_len=30, learning_rate=8e-05, loss='mse', lradj='type1', model='DLinear', model_id='Space_17', moving_avg=25, n_heads=8, num_workers=10, output_attention=False, patience=10, pred_len=30, root_path='./dataset/', seq_len=60, target='OT', test_flop=False, train_epochs=100, use_amp=False, use_gpu=False, use_multi_gpu=False)
+Use CPU
+>>>>>>>testing : Space_17_DLinear_custom_ftS_sl60_ll30_pl30_dm256_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+loading model
+test_whole 60
+this is for testing haha

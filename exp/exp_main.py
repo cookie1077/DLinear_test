@@ -39,8 +39,8 @@ class Exp_Main(Exp_Basic):
         return model
 
     def _get_data(self, flag):
-        data_set, data_loader = data_provider(self.args, flag)
-        return data_set, data_loader
+        data_set, data_loader, scaler = data_provider(self.args, flag)
+        return data_set, data_loader, scaler
 
     def _select_optimizer(self):
         model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
@@ -50,9 +50,10 @@ class Exp_Main(Exp_Basic):
         criterion = nn.MSELoss()
         return criterion
 
-    def vali(self, vali_data, vali_loader, criterion):
+    def vali(self, vali_data, vali_loader, criterion, test_scaler = None):
         total_loss = []
         self.model.eval()
+
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
                 batch_x = batch_x.float().to(self.device)
@@ -89,18 +90,31 @@ class Exp_Main(Exp_Basic):
                 pred = outputs.detach().cpu()
                 true = batch_y.detach().cpu()
 
+                if test_scaler is not None :
+                    scaler = StandardScaler()
+
+                    scaler.scale_ = np.array([29.68678101])
+                    scaler.mean_ = np.array([105.56850176])
+                    scaler.var_ = np.array([881.30496647])
+
+                    #pred = np.array([test_scaler.inverse_transform(pred[0])])
+                    #pred = torch.from_numpy(pred)
+                    #true = np.array([scaler.inverse_transform(true[0])])
+                    #true = torch.from_numpy(true)
+
                 loss = criterion(pred, true)
 
                 total_loss.append(loss)
         total_loss = np.average(total_loss)
         self.model.train()
+
         return total_loss
 
     def train(self, setting):
         
-        train_data, train_loader = self._get_data(flag='train')
-        vali_data, vali_loader = self._get_data(flag='val')
-        test_data, test_loader = self._get_data(flag='test')
+        train_data, train_loader, s = self._get_data(flag='train')
+        vali_data, vali_loader, s = self._get_data(flag='val')
+        test_data, test_loader, test_scaler = self._get_data(flag='test')
 
         path = os.path.join(self.args.checkpoints, setting)
         if not os.path.exists(path):
@@ -186,8 +200,9 @@ class Exp_Main(Exp_Basic):
 
             print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
             train_loss = np.average(train_loss)
-            vali_loss = self.vali(vali_data, vali_loader, criterion)
-            test_loss = self.vali(test_data, test_loader, criterion)  
+            vali_loss = self.vali(vali_data, vali_loader, criterion, test_scaler = None)
+            test_loss = self.vali(test_data, test_loader, criterion, test_scaler)
+            print('not here')  
 
             print("Epoch: {0}, Steps: {1} | Train Loss: {2:.7f} Vali Loss: {3:.7f} Test Loss: {4:.7f}".format(
                 epoch + 1, train_steps, train_loss, vali_loss, test_loss)) 
@@ -206,11 +221,11 @@ class Exp_Main(Exp_Basic):
     def test(self, setting, test=0):
         
         if test:
-            print('loading model')
+    
             self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
-            test_data, test_loader = self._get_data(flag='test_whole')
+            test_data, test_loader, test_scaler = self._get_data(flag='test_whole')
         else:
-            test_data, test_loader = self._get_data(flag='test')
+            test_data, test_loader, test_scaler = self._get_data(flag='test')
 
         preds = []
         trues = []
@@ -257,16 +272,19 @@ class Exp_Main(Exp_Basic):
                 outputs = outputs.detach().cpu().numpy()
                 
                 if test:
-                    print('this is for testing haha')
                   
                     pred = [o[0] for o in outputs[0]]
                     input = batch_x.detach().cpu().numpy()
-                    scaler = StandardScaler()
-                    scaler.scale_ = np.array([10.2057])
-                    scaler.mean_ = np.array([136.634])
-                    scaler.var_ = np.array([102.42])
 
-                    pred = scaler.inverse_transform(pred)
+                    scaler = StandardScaler()
+
+                    scaler.scale_ = np.array([29.68678101])
+                    scaler.mean_ = np.array([105.56850176])
+                    scaler.var_ = np.array([881.30496647])
+
+                    pred = test_scaler.inverse_transform(pred)
+                    print(test_scaler.get_params())
+    
                     input = scaler.inverse_transform(input)
                     self.__save_as_excel(setting, pred)
                     
@@ -307,6 +325,15 @@ class Exp_Main(Exp_Basic):
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
+        scaler = StandardScaler()
+
+        #scaler.scale_ = np.array([29.68678101])
+        #scaler.mean_ = np.array([105.56850176])
+        #scaler.var_ = np.array([881.30496647])
+
+        #preds = np.array([test_scaler.inverse_transform(preds[0])])
+        #trues = np.array([scaler.inverse_transform(trues[0])])
+
         mae, mse, rmse, mape, mspe, rse, corr = metric(preds, trues)
         print('mse:{}, mae:{}, rse:{}, corr:{}'.format(mse, mae, rse, corr))
         f = open("result.txt", 'a')
@@ -323,7 +350,7 @@ class Exp_Main(Exp_Basic):
         return
 
     def predict(self, setting, load=False):
-        pred_data, pred_loader = self._get_data(flag='pred')
+        pred_data, pred_loader, s = self._get_data(flag='pred')
 
         if load:
             path = os.path.join(self.args.checkpoints, setting)

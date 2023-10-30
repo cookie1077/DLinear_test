@@ -193,6 +193,7 @@ class Dataset_Custom(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='S', data_path='ETTh1.csv',
                  target='OT', scale=True, timeenc=0, freq='h'):
+        
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
@@ -214,6 +215,7 @@ class Dataset_Custom(Dataset):
         self.timeenc = timeenc
         self.freq = freq
         self.flag = flag
+        self.test_scaler = None
 
         self.root_path = root_path
         self.data_path = data_path
@@ -251,6 +253,8 @@ class Dataset_Custom(Dataset):
                 self.scaler.scale_ = np.array([29.68678101])
                 self.scaler.mean_ = np.array([105.56850176])
                 self.scaler.var_ = np.array([881.30496647])
+
+                print(df_data.values)
             else:
                 train_data = df_data[border1s[0]:border2s[0]]
                 self.scaler.fit(train_data.values)
@@ -258,6 +262,10 @@ class Dataset_Custom(Dataset):
             data = self.scaler.transform(df_data.values)
         else:
             data = df_data.values
+
+        if self.flag == 'test_whole' or 'test' :
+            self.train_scaler = StandardScaler()
+            self.train_scaler.fit(df_data.values)
 
         df_stamp = df_raw[['date']][border1:border2]
         df_stamp['date'] = pd.to_datetime(df_stamp.date)

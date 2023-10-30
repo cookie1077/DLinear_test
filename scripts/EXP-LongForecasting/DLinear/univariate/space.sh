@@ -10,8 +10,8 @@ if [ ! -d "./logs/LongForecasting/univariate" ]; then
     mkdir ./logs/LongForecasting/univariate
 fi
 
-model_id=Space_15
-learning_rate=0.00008
+model_id=Space_21
+learning_rate=0.0001
 patience=10
 train_epochs=100
 d_model=256
