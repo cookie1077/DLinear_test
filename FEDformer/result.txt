@@ -1,3 +1,9 @@
 Test1_FEDformer_random_modes64_custom_ftS_sl60_ll30_pl30_dm512_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0  
 mse:1.0839322805404663, mae:0.6644541621208191
 
+Test2_FEDformer_random_modes64_custom_ftS_sl60_ll30_pl30_dm128_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0  
+mse:1.123124122619629, mae:0.6730821132659912
+
+Test3_FEDformer_random_modes64_custom_ftS_sl60_ll30_pl30_dm128_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0  
+mse:1.0719661712646484, mae:0.6596683859825134
+

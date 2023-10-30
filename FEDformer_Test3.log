@@ -1,0 +1,208 @@
+Initializing a new experiment...
+Connected to experiment #20.
+For more info: https://vessl.ai/snu-eng-dgx/test01/experiments/20
+Args in experiment:
+Namespace(L=3, activation='gelu', base='legendre', batch_size=8, c_out=1, checkpoints='../', cross_activation='tanh', d_ff=2048, d_layers=1, d_model=128, data='custom', data_path='ai_competition_nonan.csv', dec_in=1, des='Exp', devices='0,1', distil=True, do_predict=False, dropout=0.05, e_layers=2, embed='timeF', embed_type=0, enc_in=1, factor=3, features='S', freq='h', gpu=0, is_training=1, itr=1, label_len=30, learning_rate=1e-05, loss='mse', lradj='type1', mode_select='random', model='FEDformer', modes=64, moving_avg=[24], n_heads=8, num_workers=10, output_attention=False, patience=5, pred_len=30, root_path='../dataset', seq_len=60, target='OT', task_id='Test3', train_epochs=10, use_amp=False, use_gpu=False, use_multi_gpu=False, version='Fourier')
+Use CPU
+fourier enhanced block used!
+modes=64, index=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+fourier enhanced block used!
+modes=64, index=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+ fourier enhanced cross attention used!
+modes_q=30, index_q=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+modes_kv=30, index_kv=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+enc_modes: 30, dec_modes: 30
+>>>>>>>start training : Test3_FEDformer_random_modes64_custom_ftS_sl60_ll30_pl30_dm128_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+[[ 94.8   ]
+ [ 96.93  ]
+ [ 97.71  ]
+ ...
+ [126.9195]
+ [128.634 ]
+ [143.651 ]]
+2
+train 2944
+2
+2
+[[ 94.8   ]
+ [ 96.93  ]
+ [ 97.71  ]
+ ...
+ [126.9195]
+ [128.634 ]
+ [143.651 ]]
+2
+val 406
+2
+2
+[[ 94.8   ]
+ [ 96.93  ]
+ [ 97.71  ]
+ ...
+ [126.9195]
+ [128.634 ]
+ [143.651 ]]
+2
+test 837
+2
+2
+Epoch: 1 cost time: 179.40117502212524
+2
+2
+Epoch: 1, Steps: 368 | Train Loss: 0.4100863 Vali Loss: 0.0532692 Test Loss: 1.0719661
+Validation loss decreased (inf --> 0.053269).  Saving model ...
+Updating learning rate to 1e-05
+2
+Epoch: 2 cost time: 176.5323028564453
+2
+2
+Epoch: 2, Steps: 368 | Train Loss: 0.3706159 Vali Loss: 0.0606778 Test Loss: 1.0659820
+EarlyStopping counter: 1 out of 5
+Updating learning rate to 5e-06
+2
+Epoch: 3 cost time: 173.55242896080017
+2
+2
+Epoch: 3, Steps: 368 | Train Loss: 0.3596674 Vali Loss: 0.0612988 Test Loss: 1.0696104
+EarlyStopping counter: 2 out of 5
+Updating learning rate to 2.5e-06
+2
+Epoch: 4 cost time: 173.4568576812744
+2
+2
+Epoch: 4, Steps: 368 | Train Loss: 0.3560239 Vali Loss: 0.0614267 Test Loss: 1.0703303
+EarlyStopping counter: 3 out of 5
+Updating learning rate to 1.25e-06
+2
+Epoch: 5 cost time: 174.4473419189453
+2
+2
+Epoch: 5, Steps: 368 | Train Loss: 0.3544861 Vali Loss: 0.0614123 Test Loss: 1.0708627
+EarlyStopping counter: 4 out of 5
+Updating learning rate to 6.25e-07
+2
+Epoch: 6 cost time: 173.35110712051392
+2
+2
+Epoch: 6, Steps: 368 | Train Loss: 0.3536079 Vali Loss: 0.0617511 Test Loss: 1.0712273
+EarlyStopping counter: 5 out of 5
+Early stopping
+>>>>>>>testing : Test3_FEDformer_random_modes64_custom_ftS_sl60_ll30_pl30_dm128_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+[[ 94.8   ]
+ [ 96.93  ]
+ [ 97.71  ]
+ ...
+ [126.9195]
+ [128.634 ]
+ [143.651 ]]
+2
+test 837
+start here
+2
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+loop begins
+test shape: (104, 8, 30, 1) (104, 8, 30, 1)
+test shape: (832, 30, 1) (832, 30, 1)
+mse:1.0719661712646484, mae:0.6596683859825134

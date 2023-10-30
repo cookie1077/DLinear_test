@@ -222,7 +222,7 @@ class Exp_Main(Exp_Basic):
     def test(self, setting, test=0):
 
         if test:
-            print('loading model')
+            print('loading model hehe')
             self.model.load_state_dict(torch.load(os.path.join('/input/' + 'checkpoint.pth')))
             test_data, test_loader = self._get_data(flag='test_whole')
         else:
@@ -266,17 +266,21 @@ class Exp_Main(Exp_Basic):
                 outputs = outputs.detach().cpu().numpy()
 
                 if test:
-                    print('this is for testing')
+                    print('this is for testing haha')
                   
                     pred = [o[0] for o in outputs[0]]
                     input = batch_x.detach().cpu().numpy()
                     scaler = StandardScaler()
-                    scaler.scale_ = np.array([29.68678101])
-                    scaler.mean_ = np.array([105.56850176])
-                    scaler.var_ = np.array([881.30496647])
+                    scaler.scale_ = np.array([10.2057])
+                    scaler.mean_ = np.array([136.634])
+                    scaler.var_ = np.array([102.42])
 
+                    print('print here')
+                    print(pred)
                     pred = scaler.inverse_transform(pred)
                     input = scaler.inverse_transform(input)
+
+                    print(pred)
                     self.__save_as_excel(setting, pred)
                     
                     gt = np.concatenate((input[0, :, -1], pred[:]), axis=0)

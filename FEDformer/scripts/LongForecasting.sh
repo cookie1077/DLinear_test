@@ -8,9 +8,9 @@ if [ ! -d "../logs/LongForecasting" ]; then
 fi
 
 preLen=30
-task_id=Test2
-checkpoints=/output/
-learning_rate=0.0002
+task_id=Test3
+checkpoints=../
+learning_rate=0.00001
 patience=5
 epochs=10
 

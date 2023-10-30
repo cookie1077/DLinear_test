@@ -248,9 +248,9 @@ class Dataset_Custom(Dataset):
 
         if self.scale:
             if self.flag == 'test_whole':
-                self.scaler.scale_ = np.array([29.68678101])
-                self.scaler.mean_ = np.array([105.56850176])
-                self.scaler.var_ = np.array([881.30496647])
+                self.scaler.scale_ = np.array([30.0980298])
+                self.scaler.mean_ = np.array([101.491129])
+                self.scaler.var_ = np.array([905.677393])
             else:
                 train_data = df_data[border1s[0]:border2s[0]]
                 self.scaler.fit(train_data.values)
